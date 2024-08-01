@@ -1,2 +1,2 @@
 # Tic-Tac-Toe-Beginner-
-A simple tic tac toe game made using python !
+A simple multiplayer tic tac toe game made using python !
