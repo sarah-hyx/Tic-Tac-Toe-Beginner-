@@ -1,13 +1,13 @@
 class Board:
     def __init__(self):
-        self.board = [[' '] * 3 for i in range(3)]
+        self.board = [['  '] * 3 for i in range(3)]
         self.winner = ""
 
     def display_board(self):
         board = self.getboard()
         row = "ABC"
         column = ["1", "2", "3"]
-        print(f"    {" ".join(column)}")
+        print(f"    {"  ".join(column)}")
         for i in range(3):
             print(f" {row[i]}  { "|".join(board[i])}")
         print()
@@ -27,7 +27,7 @@ class Board:
         
         board = self.getboard()
         row, column = self.convert_cell(cell)
-        if board[row][int(column)] != " ":
+        if board[row][int(column)] != "  ":
             return False
         else:
             return True
@@ -48,30 +48,33 @@ class Board:
     
     def update_board(self, cell, symbol):
         row, column = self.convert_cell(cell)
-        self.board[row][column] = symbol
+        if symbol == "O":
+            self.board[row][column] = f"\033[91m {symbol}\033[00m"
+        else:
+            self.board[row][column] = f"\033[96m {symbol}\033[00m"
     
     def check_winner(self):
         board = self.getboard()
         for i in range(3):
             #check if there is a win in rows
-            if board[i][0] == board[i][1] == board[i][2] != " ":
+            if board[i][0] == board[i][1] == board[i][2] != "  ":
                 self.set_winner(board[i][0])
                 return True
             #check if there is a win in columns
-            elif board[0][i] == board[1][i] == board[2][i] != " ":
+            elif board[0][i] == board[1][i] == board[2][i] != "  ":
                 self.set_winner(board[i][0])
                 return True
         #check if there is a win in diagonals
-        if board[0][0] == board[1][1] == board[2][2] != " ":
+        if board[0][0] == board[1][1] == board[2][2] != "  ":
             self.set_winner(board[0][0])
             return True
-        elif board[0][2] == board[1][1] == board[2][0] != " ":
+        elif board[0][2] == board[1][1] == board[2][0] != "  ":
             self.set_winner(board[0][2])
             return True
         return False
     
     def set_winner(self, symbol):
-        if symbol == "O":
+        if symbol == "\033[91m O\033[00m":
             self.winner = "Player 1"
         else:
             self.winner = "Player 2"
@@ -87,6 +90,6 @@ class Board:
             return True
         board = self.getboard()
         for row in board:
-            if " " in row:
+            if "  " in row:
                 return False
         return True
